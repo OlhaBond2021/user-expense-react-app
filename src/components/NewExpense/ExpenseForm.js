@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 
-import "./ExpenseForm.css";
+import styles from "./ExpenseForm.module.css";
 
 const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
   // const [userInput, setUserInput] = useState({
   //   enteredTitle: '',
   //   enteredAmount: '',
@@ -13,6 +15,9 @@ const ExpenseForm = (props) => {
   // });
 
   const titleChangeHandler = (event) => {
+    if (event.target.value.trim().length > 0) {
+      setIsValid(true);
+    }
     setEnteredTitle(event.target.value);
 
     //..................................this solution is bad!!!!
@@ -28,6 +33,9 @@ const ExpenseForm = (props) => {
   };
 
   const amountChangeHandler = (event) => {
+    if (event.target.value.trim().length > 0) {
+      setIsValid(true);
+    }
     setEnteredAmount(event.target.value);
 
     //.....................................this solution is bad!!!!
@@ -39,6 +47,9 @@ const ExpenseForm = (props) => {
   };
 
   const dateChangeHandler = (event) => {
+    if (event.target.value.trim().length > 0) {
+      setIsValid(true);
+    }
     setEnteredDate(event.target.value);
 
     //..................................this solution is bad!!!!
@@ -51,6 +62,20 @@ const ExpenseForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault(); // метод JS який відміняє відправку форми за замовчуванням
+    if (enteredTitle.trim().length === 0) {
+      setIsValid(false);
+      return;
+    }
+
+    if (enteredDate.trim().length === 0) {
+      setIsValid(false);
+      return;
+    }
+
+    if (enteredAmount.trim().length === 0) {
+      setIsValid(false);
+      return;
+    }
 
     const expenseData = {
       title: enteredTitle,
@@ -66,8 +91,8 @@ const ExpenseForm = (props) => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div className="new-expense__controls">
-        <div className="new-expense__control">
+      <div className={styles["new-expense__controls"]}>
+        <div className={`${styles["new-expense__control"]} ${!isValid && styles.invalid}`}>
           <label>Title</label>
           <input
             type="text"
@@ -75,7 +100,7 @@ const ExpenseForm = (props) => {
             onChange={titleChangeHandler}
           />
         </div>
-        <div className="new-expense__control">
+        <div className={`${styles["new-expense__control"]} ${!isValid && styles.invalid}`}>
           <label>Amount</label>
           <input
             type="number"
@@ -85,7 +110,7 @@ const ExpenseForm = (props) => {
             step="0.01"
           />
         </div>
-        <div className="new-expense__control">
+        <div className={`${styles["new-expense__control"]} ${!isValid && styles.invalid}`}>
           <label>Date</label>
           <input
             type="date"
@@ -96,7 +121,7 @@ const ExpenseForm = (props) => {
           />
         </div>
       </div>
-      <div className="new-expense__actions">
+      <div className={styles["new-expense__actions"]}>
         <button type="button" onClick={props.onCancel}>Cancel</button>
         <button type="submit">Add Expense</button>
       </div>

@@ -36,3 +36,9 @@
 .new-expense button.alternative:active {
   background-color: #ddb3f8;
 }
+
+@media screen and (max-width: 425px) {
+  .new-expense button {
+    margin-right: 0;
+  }
+}
