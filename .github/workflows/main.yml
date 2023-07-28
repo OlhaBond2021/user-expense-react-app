@@ -6,7 +6,7 @@ name: Build and Release
 on: 
   # Triggers the workflow on push or pull request events but for the "main" btanch
   push:
-    branches: [ "dev" ]
+    branches: [ "master" ]
   workflow_dispatch:
   
 jobs:
